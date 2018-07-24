@@ -9,6 +9,7 @@ export class MyMap extends Component {
       width: '100%',
       height: '100%'
     }
+    console.log(this.props.places)
     return (
       <div className="map">
         <Map
@@ -18,6 +19,14 @@ export class MyMap extends Component {
           initialCenter={this.props.center}
           zoom={this.props.zoom}
         >
+        {this.props.places.map((location) => {
+          console.log(location)
+          return (<Marker
+            title={location.title}
+            name={location.title}
+            position={location.location}
+          />)
+        })}
         </Map>
       </div>
     )
