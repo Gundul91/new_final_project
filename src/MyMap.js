@@ -9,22 +9,23 @@ export class MyMap extends Component {
       width: '100%',
       height: '100%'
     }
-    console.log(this.props.selectedPlace)
     return (
       <div className="map">
         <Map
           google={this.props.google}
-          onClick={(props) => this.props.onMapClicked(props)}
+          onClick={props => this.props.onMapClicked(props)}
           style={style}
           initialCenter={this.props.center}
           zoom={this.props.zoom}
         >
-        {this.props.places.map((location) => {
+        {this.props.places.map(location => {
           return (<Marker
             onClick={(props, marker) => this.props.onMarkerClick(props, marker)}
             title={location.name}
             name={location.name}
             position={location.location}
+            id={location.id}
+            ref={this.props.markerCreated}
           />)
         })}
 

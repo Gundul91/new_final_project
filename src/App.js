@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import MyMap from './MyMap.js'
+import PlaceList from './PlaceList.js'
 
 class App extends Component {
   state = {
@@ -11,12 +12,23 @@ class App extends Component {
     activeMarker: {},
     selectedPlace: {}
   }
+  markers = [];
   getPlaces() {
     fetch('https://api.foursquare.com/v2/venues/search?near=Rome&radius=150&categoryId=4d4b7105d754a06374d81259&client_id=LC0GY54VBUJOVC5RURAESLSK1TK3YPNGYXGVK3BWDGGTAHEX&client_secret=JFZ3ZCNVU4RDDH1PUV3KHKS5PLLJSQ5RVPQZ4AJNLMZAB1MV&v=20170901')
     .then(res => res.json())
     .then(res => {
       this.setState({places: res.response.venues})
     })
+  }
+  onListClick = (place) => {
+    this.markers.forEach(marker => {
+      //console.log(marker)
+      if(marker.props.id === place.target.id)
+        new marker.props.google.maps.event.trigger(marker.marker, 'click')
+    })
+  }
+  markerCreated = (marker) => {
+    this.markers.push(marker)
   }
   onMarkerClick = (props, marker) => {
     this.setState({
@@ -39,6 +51,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <PlaceList
+          places={this.state.places}
+          onListClick={this.onListClick}
+        />
         <MyMap
           center={this.state.center}
           zoom={this.state.zoom}
@@ -47,7 +63,9 @@ class App extends Component {
           activeMarker={this.state.activeMarker}
           selectedPlace={this.state.selectedPlace}
           onMarkerClick={this.onMarkerClick}
-          onMapClicked={this.onMapClicked}/>
+          onMapClicked={this.onMapClicked}
+          markerCreated={this.markerCreated}
+        />
       </div>
     );
   }
