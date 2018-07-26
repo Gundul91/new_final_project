@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .App-logo {
@@ -25,4 +27,19 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.placeBar {
+  width: 20%;
+}
+
+.App>div:nth-child(2) {
+}
+
+.map>div {
+  max-width: 80%;
+}
+
+.location {
+  cursor: pointer;
 }

@@ -13,8 +13,9 @@ class App extends Component {
     selectedPlace: {}
   }
   markers = [];
-  getPlaces() {
-    fetch('https://api.foursquare.com/v2/venues/search?near=Rome&radius=150&categoryId=4d4b7105d754a06374d81259&client_id=LC0GY54VBUJOVC5RURAESLSK1TK3YPNGYXGVK3BWDGGTAHEX&client_secret=JFZ3ZCNVU4RDDH1PUV3KHKS5PLLJSQ5RVPQZ4AJNLMZAB1MV&v=20170901')
+  getPlaces(url) {
+    this.markers = []
+    fetch(url)
     .then(res => res.json())
     .then(res => {
       this.setState({places: res.response.venues})
@@ -22,13 +23,13 @@ class App extends Component {
   }
   onListClick = (place) => {
     this.markers.forEach(marker => {
-      //console.log(marker)
       if(marker.props.id === place.target.id)
         new marker.props.google.maps.event.trigger(marker.marker, 'click')
     })
   }
   markerCreated = (marker) => {
-    this.markers.push(marker)
+    if(marker)
+      this.markers.push(marker)
   }
   onMarkerClick = (props, marker) => {
     this.setState({
@@ -46,14 +47,16 @@ class App extends Component {
     }
   };
   componentDidMount() {
-    this.getPlaces()
+    this.getPlaces('https://api.foursquare.com/v2/venues/search?near=Rome&radius=150&categoryId=4d4b7105d754a06374d81259&client_id=LC0GY54VBUJOVC5RURAESLSK1TK3YPNGYXGVK3BWDGGTAHEX&client_secret=JFZ3ZCNVU4RDDH1PUV3KHKS5PLLJSQ5RVPQZ4AJNLMZAB1MV&v=20170901')
   }
   render() {
+    this.markers = []
     return (
       <div className="App">
         <PlaceList
           places={this.state.places}
           onListClick={this.onListClick}
+          getPlaces={this.getPlaces.bind(this)}
         />
         <MyMap
           center={this.state.center}
@@ -64,7 +67,7 @@ class App extends Component {
           selectedPlace={this.state.selectedPlace}
           onMarkerClick={this.onMarkerClick}
           onMapClicked={this.onMapClicked}
-          markerCreated={this.markerCreated}
+          markerCreated={this.markerCreated.bind(this)}
         />
       </div>
     );
