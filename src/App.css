@@ -1,3 +1,7 @@
+body, html, #root, .App, .placeBar {
+  height: 100%;
+}
+
 .App {
   text-align: center;
   display: flex;
@@ -31,6 +35,13 @@
 
 .placeBar {
   width: 20%;
+  background-color: #B5D3DB;
+  height: 100%;
+}
+
+.placeBar>h1 {
+  color: #43617D;
+  margin: 10px auto 5px;
 }
 
 .App>div:nth-child(2) {
@@ -40,6 +51,26 @@
   max-width: 80%;
 }
 
+.placeList {
+  padding: 10px;
+  margin: 0;
+}
+
 .location {
+  list-style-type: none;
   cursor: pointer;
+  border: solid 1px #43617D;
+  border-radius: 5px;
+  margin: 3px 0;
+  padding: 5px;
+  font-size: 1.2em;
+  background-color: #5A8DAB;
+  color: #283143
+}
+
+.searchBar {
+  width: 80%;
+  height: 25px;
+  font-size: 1.3em;
+  margin: 20px;
 }
