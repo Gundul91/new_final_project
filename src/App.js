@@ -9,9 +9,11 @@ class App extends Component {
     zoom: 17,
     places: [],
     showingInfoWindow: false,
-    activeMarker: {},
-    selectedPlace: {}
+    activeMarker: null,
+    selectedPlace: {},
+    urlPhoto: ''
   }
+  placesInfos= {};
   markers = [];
   getPlaces(url) {
     this.markers = []
@@ -31,14 +33,58 @@ class App extends Component {
     if(marker)
       this.markers.push(marker)
   }
+  /*
+  CONTROLLARE SE LE FOTO FUNZIONANO O SE MANCA MOSTRA LA PRECEDENTE
+  */
   onMarkerClick = (props, marker) => {
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    })};
+    if(this.state.activeMarker !== null && this.state.activeMarker !== marker)
+      this.state.activeMarker.setAnimation(null)
+    marker.setAnimation(props.google.maps.Animation.BOUNCE)
+    let infoPhoto = ''
+    if(this.placesInfos[props.id]) {
+      props= this.placesInfos[props.id].props
+      marker= this.placesInfos[props.id].marker
+      if(this.placesInfos[props.id].infoPhoto) {
+        infoPhoto= this.placesInfos[props.id].infoPhoto
+        this.state.urlPhoto= infoPhoto.prefix + '200x300' + infoPhoto.suffix
+      }
+      this.setState({
+        selectedPlace: props,
+        activeMarker: marker,
+        showingInfoWindow: true
+      })
+    } else {
+      this.placesInfos[props.id]= {}
+      this.placesInfos[props.id].props= props
+      this.placesInfos[props.id].marker= marker
+      this.placesInfos[props.id].infoPhoto = ""
+      fetch('https://api.foursquare.com/v2/venues/' + props.id + '/photos?client_id=LC0GY54VBUJOVC5RURAESLSK1TK3YPNGYXGVK3BWDGGTAHEX&client_secret=JFZ3ZCNVU4RDDH1PUV3KHKS5PLLJSQ5RVPQZ4AJNLMZAB1MV&v=20170901')
+      .then(res => res.json())
+      .then((res) => {
+        if(res.response.photos.items.length){
+          this.placesInfos[props.id].infoPhoto= infoPhoto
+          this.state.urlPhoto= infoPhoto.prefix + '200x300' + infoPhoto.suffix
+        }
+        this.setState({
+          selectedPlace: props,
+          activeMarker: marker,
+          showingInfoWindow: true
+        })
+      }).catch((err) => {
+        console.log(err)
+        this.setState({
+          selectedPlace: props,
+          activeMarker: marker,
+          showingInfoWindow: true
+        })
+      })
+    }
+
+  };
 
   onMapClicked = (props) => {
+    if(this.state.activeMarker)
+      this.state.activeMarker.setAnimation(null)
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
@@ -68,6 +114,7 @@ class App extends Component {
           onMarkerClick={this.onMarkerClick}
           onMapClicked={this.onMapClicked}
           markerCreated={this.markerCreated.bind(this)}
+          urlPhoto={this.state.urlPhoto}
         />
       </div>
     );

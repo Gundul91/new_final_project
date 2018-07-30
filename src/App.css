@@ -37,6 +37,7 @@ body, html, #root, .App, .placeBar {
   width: 20%;
   background-color: #B5D3DB;
   height: 100%;
+  border-right: solid 3px #43617D;
 }
 
 .placeBar>h1 {
