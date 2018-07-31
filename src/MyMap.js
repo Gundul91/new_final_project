@@ -35,7 +35,7 @@ export class MyMap extends Component {
           onClose={this.props.onMapClicked}
           visible={this.props.showingInfoWindow}>
             <div>
-              <h1>{this.props.selectedPlace.name}</h1>
+              <h1 className="place-name">{this.props.selectedPlace.name}</h1>
               {this.props.urlPhoto !== null &&
                 (<img className="photo" src={this.props.urlPhoto}></img>)
               }

@@ -11,6 +11,27 @@ class PlaceList extends Component {
     }))
   }
 
+  componentDidMount() {
+    let button = document.querySelector(".barButton")
+    let element = document.querySelector(".placeBar")
+    button.addEventListener("click", function() {
+      let style = window.getComputedStyle(element)
+      console.log(style.getPropertyValue("left"))
+      if(style.getPropertyValue("left") === "0px") {
+        element.style.left = "calc(-58%)"
+      } else {
+        element.style.left = "0px"
+      }
+    })
+    element.addEventListener("click", function() {
+      let style = window.getComputedStyle(element)
+      console.log(style.getPropertyValue("left"))
+      if(style.getPropertyValue("left") !== "0px") {
+        element.style.left = "0px"
+      }
+    })
+  }
+
   render() {
     const{listOpen, headerTitle} = this.state
     return(
@@ -22,6 +43,7 @@ class PlaceList extends Component {
           <li className="location" key={item.id} id={item.id} onClick={this.props.onListClick}>{item.name}</li>
         ))}
         </ul>
+        <button className="barButton">X</button>
       </div>
     )
   }

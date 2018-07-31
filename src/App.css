@@ -38,14 +38,14 @@ body, html, #root, .App, .placeBar {
   background-color: #B5D3DB;
   height: 100%;
   border-right: solid 3px #43617D;
+  overflow: scroll;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 .placeBar>h1 {
   color: #43617D;
   margin: 10px auto 5px;
-}
-
-.App>div:nth-child(2) {
 }
 
 .map>div {
@@ -74,4 +74,63 @@ body, html, #root, .App, .placeBar {
   height: 25px;
   font-size: 1.3em;
   margin: 20px;
+}
+
+.barButton {
+  background-color: inherit;
+  border: none;
+  display: none;
+  width: 30px;
+  height: 20px;
+  font-size: 1em;
+  color: #43617D;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
+@media screen and (max-height: 550px) {
+  .searchBar {
+    margin: 10px;
+    font-size: 0.9em;
+  }
+
+  .placeBar>h1 {
+    margin: 5px auto 3px;
+    font-size: 1.5em;
+  }
+
+  .location {
+    font-size: 0.9em;
+  }
+
+  .gm-style-iw img{
+    height: 200px;
+  }
+  .place-name {
+    font-size: 1.3em;
+  }
+}
+
+@media screen and (orientation: Portrait) {
+  .map>div {
+    max-width: 100%;
+  }
+  .placeBar {
+    position: absolute;
+    left: calc(-58%);
+    top: 0px;
+    z-index: 100;
+    width: 60%;
+    transition: left 0.3s;
+  }
+  .placeBar:hover {
+    left: 0px;
+  }
+  .placeBar:hover .barButton {
+    display: block;
+  }
+  .place-name {
+    font-size: 1.4em;
+  }
 }
