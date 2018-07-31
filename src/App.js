@@ -21,6 +21,8 @@ class App extends Component {
     .then(res => res.json())
     .then(res => {
       this.setState({places: res.response.venues})
+    }).catch(err => {
+      window.alert(err);
     })
   }
   onListClick = (place) => {
@@ -60,7 +62,7 @@ class App extends Component {
       .then(res => res.json())
       .then((res) => {
         this.state.urlPhoto = ''
-        if(res.response.photos.items.length){
+        if(res.response.photos){
           infoPhoto = res.response.photos.items[0]
           this.placesInfos[props.id].infoPhoto = infoPhoto
           this.state.urlPhoto= infoPhoto.prefix + '200x300' + infoPhoto.suffix
@@ -71,7 +73,6 @@ class App extends Component {
           showingInfoWindow: true
         })
       }).catch((err) => {
-        console.log(err)
         this.setState({
           selectedPlace: props,
           activeMarker: marker,

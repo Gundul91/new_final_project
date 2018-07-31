@@ -19,8 +19,9 @@ export class MyMap extends Component {
           initialCenter={this.props.center}
           zoom={this.props.zoom}
         >
-        {this.props.places.map(location => {
+        {this.props.places.map((location, index) => {
           return (<Marker
+            key={index + "marker"}
             onClick={(props, marker) => this.props.onMarkerClick(props, marker)}
             title={location.name}
             name={location.name}
@@ -36,8 +37,8 @@ export class MyMap extends Component {
           visible={this.props.showingInfoWindow}>
             <div>
               <h1 className="place-name">{this.props.selectedPlace.name}</h1>
-              {this.props.urlPhoto !== null &&
-                (<img className="photo" src={this.props.urlPhoto}></img>)
+              {this.props.urlPhoto !== "" &&
+                (<img className="photo" src={this.props.urlPhoto} alt="InfoWindow Image"></img>)
               }
             </div>
         </InfoWindow>
