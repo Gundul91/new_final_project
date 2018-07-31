@@ -33,9 +33,6 @@ class App extends Component {
     if(marker)
       this.markers.push(marker)
   }
-  /*
-  CONTROLLARE SE LE FOTO FUNZIONANO O SE MANCA MOSTRA LA PRECEDENTE
-  */
   onMarkerClick = (props, marker) => {
     if(this.state.activeMarker !== null && this.state.activeMarker !== marker)
       this.state.activeMarker.setAnimation(null)
@@ -44,6 +41,7 @@ class App extends Component {
     if(this.placesInfos[props.id]) {
       props= this.placesInfos[props.id].props
       marker= this.placesInfos[props.id].marker
+      this.state.urlPhoto = ''
       if(this.placesInfos[props.id].infoPhoto) {
         infoPhoto= this.placesInfos[props.id].infoPhoto
         this.state.urlPhoto= infoPhoto.prefix + '200x300' + infoPhoto.suffix
@@ -61,8 +59,10 @@ class App extends Component {
       fetch('https://api.foursquare.com/v2/venues/' + props.id + '/photos?client_id=LC0GY54VBUJOVC5RURAESLSK1TK3YPNGYXGVK3BWDGGTAHEX&client_secret=JFZ3ZCNVU4RDDH1PUV3KHKS5PLLJSQ5RVPQZ4AJNLMZAB1MV&v=20170901')
       .then(res => res.json())
       .then((res) => {
+        this.state.urlPhoto = ''
         if(res.response.photos.items.length){
-          this.placesInfos[props.id].infoPhoto= infoPhoto
+          infoPhoto = res.response.photos.items[0]
+          this.placesInfos[props.id].infoPhoto = infoPhoto
           this.state.urlPhoto= infoPhoto.prefix + '200x300' + infoPhoto.suffix
         }
         this.setState({
@@ -75,7 +75,8 @@ class App extends Component {
         this.setState({
           selectedPlace: props,
           activeMarker: marker,
-          showingInfoWindow: true
+          showingInfoWindow: true,
+          urlPhoto: ''
         })
       })
     }
