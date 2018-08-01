@@ -1,4 +1,8 @@
-body, html, #root, .App, .placeBar {
+body,
+html,
+#root,
+.App,
+.placeBar {
   height: 100%;
 }
 
@@ -8,48 +12,27 @@ body, html, #root, .App, .placeBar {
   flex-wrap: wrap;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
 .placeBar {
+  box-sizing: border-box;
   width: 20%;
-  background-color: #B5D3DB;
+  background-color: #b5d3db;
   height: 100%;
-  border-right: solid 3px #43617D;
+  border-right: solid 3px #43617d;
   overflow: scroll;
   overflow-y: auto;
   overflow-x: auto;
 }
 
-.placeBar>h1 {
-  color: #43617D;
-  margin: 10px auto 5px;
+.searchBar {
+  width: 80%;
+  height: 25px;
+  font-size: 1.3em;
+  margin: 20px;
 }
 
-.map>div {
-  max-width: 80%;
+.placeBar>h1 {
+  color: #43617d;
+  margin: 10px auto 5px;
 }
 
 .placeList {
@@ -60,20 +43,13 @@ body, html, #root, .App, .placeBar {
 .location {
   list-style-type: none;
   cursor: pointer;
-  border: solid 1px #43617D;
+  border: solid 1px #43617d;
   border-radius: 5px;
   margin: 3px 0;
   padding: 5px;
   font-size: 1.2em;
-  background-color: #5A8DAB;
-  color: #283143
-}
-
-.searchBar {
-  width: 80%;
-  height: 25px;
-  font-size: 1.3em;
-  margin: 20px;
+  background-color: #5a8dab;
+  color: #283143;
 }
 
 .barButton {
@@ -83,10 +59,14 @@ body, html, #root, .App, .placeBar {
   width: 30px;
   height: 20px;
   font-size: 1em;
-  color: #43617D;
+  color: #43617d;
   position: absolute;
   right: 0px;
   top: 0px;
+}
+
+.map>div {
+  max-width: 80%;
 }
 
 @media screen and (max-height: 550px) {
@@ -104,18 +84,16 @@ body, html, #root, .App, .placeBar {
     font-size: 0.9em;
   }
 
-  .gm-style-iw img{
+  .gm-style-iw img {
     height: 200px;
   }
+
   .place-name {
     font-size: 1.3em;
   }
 }
 
 @media screen and (orientation: Portrait) {
-  .map>div {
-    max-width: 100%;
-  }
   .placeBar {
     position: absolute;
     left: calc(-58%);
@@ -124,12 +102,19 @@ body, html, #root, .App, .placeBar {
     width: 60%;
     transition: left 0.3s;
   }
+
   .placeBar:hover {
     left: 0px;
   }
+
   .placeBar:hover .barButton {
     display: block;
   }
+
+  .map>div {
+    max-width: 100%;
+  }
+
   .place-name {
     font-size: 1.4em;
   }
