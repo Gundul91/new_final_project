@@ -6,9 +6,9 @@ marked on the map and filterable with an input field
 
 ## Table of Contents
 
-* [Installation](#Installation)
-* [Instruction](#Instruction)
-* [APIs](#APIs)
+* [Installation](#installation)
+* [Instruction](#instruction)
+* [APIs](#apis)
 
 ## Installation
 
